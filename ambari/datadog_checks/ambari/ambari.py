@@ -173,10 +173,10 @@ class AmbariCheck(AgentCheck):
                 component_tag = COMPONENT_TAG + component_name.lower()
                 for metric_name, value in iteritems(metrics):
                     metric_tags = base_tags + [component_tag]
-                    if isinstance(value, float):
+                    if isinstance(value, (float, int)):
                         self._submit_gauge(metric_name, value, metric_tags)
                     else:
-                        self.warning("Expected a float for %s, received %s", metric_name, value)
+                        self.warning("Expected a float or int for %s, received %s", metric_name, value)
 
     def _get_hosts_info(self, cluster):
         hosts_endpoint = common.HOST_METRICS_URL.format(base_url=self.base_url, cluster_name=cluster)
